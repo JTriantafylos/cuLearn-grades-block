@@ -67,6 +67,14 @@ function refreshTable() {
                 // add to the table
                 document.getElementById("GradesTable").innerHTML += "<table>" + fullTable + "</table><div style = \"width:100%; border-bottom: 1px solid black;\"></div>";
 
+                // Add some padding to the grade and range td's
+                let tds = $('td')
+                for (let i = 0; i < tds.length; i++) {
+                    if (tds[i].headers.includes('grade') || tds[i].headers.includes('range')) {
+                        tds[i].style.paddingLeft = '16px'
+                        tds[i].style.paddingRight = '16px'
+                    }
+                }
             }
         });
 

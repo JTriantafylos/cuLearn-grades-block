@@ -1,10 +1,6 @@
 # cuLearn-grades-block
 Add a custom block to your cuLearn dashboard containing all your grades from all classes in one place. Written using JS and jQuery
 
-# How does it work?
-Essentially this customization adds js code into a block on your cuLearn dashboard to add more advanced functionality.
-The code makes requests to each of the grades pages for your classes for the current/most recent semester available.
-
 # How to use
 1) Open your cuLearn dashboard and click the "Customize this Page" button in the top right corner
 2) Open the hamburger menu in the top left of the screen, and click "add a new block"
@@ -16,4 +12,4 @@ The code makes requests to each of the grades pages for your classes for the cur
 ```html
 <script id="GradesScript" src="https://cdn.jsdelivr.net/gh/jtriantafylos/cuLearn-grades-block@latest/block.js">
 ```
-8) Save the changes to your block and profit off saving a couple clicks to see if your class grades have been released yet!
+8) Save the changes to your block

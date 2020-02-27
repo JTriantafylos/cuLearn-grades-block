@@ -1,0 +1,22 @@
+{
+  "name": "culearn-grades-block",
+  "version": "1.0.1",
+  "description": "Add a custom block to your cuLearn dashboard containing all your grades from all classes in one place. Written using JS and jQuery",
+  "main": "block.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JTriantafylos/cuLearn-grades-block.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JTriantafylos/cuLearn-grades-block/issues"
+  },
+  "homepage": "https://github.com/JTriantafylos/cuLearn-grades-block#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  }
+}

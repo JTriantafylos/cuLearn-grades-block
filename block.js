@@ -10,13 +10,13 @@ function getUrlParams(url) {
 }
 
 function clearTable() {
-    // clear the table before updating it
+    // Clear the table before updating it
     let table = document.getElementById('GradesTable');
     while (table.firstChild) {
         table.removeChild(table.firstChild);
     }
 
-    // cancel ongoing requests and clear promises
+    // Cancel ongoing requests and clear promises
     requests.forEach(req => req.abort());
     requests = [];
 }
@@ -27,13 +27,13 @@ function refreshTable() {
     let linked = [];
 
     clearTable();
-    // read the current set semester (default is most recent one)
+    // Read the current set semester (default is most recent one)
     let semester = document.getElementById('semesters').value;
     let links = $(`.category_label:contains("${semester}")`).next().children();
 
     let classurl = 'https://culearn.carleton.ca/moodle/course/view.php?id=';
 
-    // create ajax requests for each class in the semester provided
+    // Create ajax requests for each class in the semester provided
     for (let x = 0; x < links.length; x++) {
         links[x] = getUrlParams($(links[x]).find("a")[0].href);
         requests.push($.ajax({
@@ -44,27 +44,23 @@ function refreshTable() {
     }
 
     Promise.all(requests).then((arr) => {
-        // hide loader
+        // Hide loader
         document.getElementById('loading').style.display = 'none';
         arr.forEach((data, index) => {
-            // filter out classes (if you are a TA/instructor) and MS-LAP
+            // Filter out classes (if you are a TA/instructor) and MS-LAP
             if ($(data).find("div#graded_users_selector").length == 0 && !$(data).find('h1')[0].innerHTML.includes('MS-LAP')) {
 
                 let org = $(data).find("th.level1:first")[0].innerHTML;
-
-
                 let link = `${linked[index]}${org}</a>`;
-
-
                 let fullTable = $(data).find("tbody:first")[0].innerHTML.replace(org, link);
 
-                // remove feedback
+                // Remove feedback
                 let remove = $(fullTable).find(".column-feedback");
 
                 for (let x = 0; x < remove.length; x++) {
                     fullTable = fullTable.replace(remove[x].innerHTML, "");
                 }
-                // add to the table
+                // Add to the table
                 document.getElementById("GradesTable").innerHTML += "<table>" + fullTable + "</table><div style = \"width:100%; border-bottom: 1px solid black;\"></div>";
 
                 // Add some padding to the grade and range td's
@@ -77,12 +73,11 @@ function refreshTable() {
                 }
             }
         });
-
     }).catch(e => e);
 }
 
 function init() {
-    // create loading bar
+    // Create loading bar
     let loading = document.createElement('img');
     loading.src = 'https://www.cs.toronto.edu/~amlan/demo/loader.gif';
     loading.id = 'loading';
@@ -92,7 +87,7 @@ function init() {
     loading.style.marginLeft = '50%';
 
 
-    // get the DOM elements ready
+    // Get the DOM elements ready
     let app = document.createElement('div');
     app.id = 'GradesApp';
 
@@ -113,9 +108,7 @@ function init() {
         let option = document.createElement('option');
         option.id = x;
         option.innerHTML = $(semesters[x]).html();
-
         select.append(option);
-
     }
     refreshTable();
     select.addEventListener('change', refreshTable);

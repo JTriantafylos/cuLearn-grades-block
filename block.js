@@ -98,8 +98,14 @@ function init () {
 
   const select = document.createElement('select')
   select.id = 'semesters'
+  select.addEventListener('change', refreshTable)
 
-  app.append(select, table, loading)
+  const hide = document.createElement('input')
+  hide.id = 'hide_unmarked'
+  hide.type = 'checkbox'
+  hide.addEventListener('change', refreshTable)
+
+  app.append(select, hide, table, loading)
 
   for (let x = 0; x < semesters.length; x++) {
     const option = document.createElement('option')
@@ -107,8 +113,8 @@ function init () {
     option.innerHTML = $(semesters[x]).html()
     select.append(option)
   }
+
   refreshTable()
-  select.addEventListener('change', refreshTable)
 }
 
 function isReady () {

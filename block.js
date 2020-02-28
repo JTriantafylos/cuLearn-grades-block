@@ -45,6 +45,7 @@ function refreshTable () {
   Promise.all(requests).then((arr) => {
     // Hide loader
     document.getElementById('loading').style.display = 'none'
+    
     arr.forEach((data, index) => {
       // Filter out classes (if you are a TA/instructor) and MS-LAP
       if ($(data).find('div#graded_users_selector').length == 0 && !$(data).find('h1')[0].innerHTML.includes('MS-LAP')) {
@@ -60,17 +61,24 @@ function refreshTable () {
         }
         // Add to the table
         document.getElementById('GradesTable').innerHTML += '<table>' + fullTable + '</table><div style = "width:100%; border-bottom: 1px solid black;"></div>'
-
-        // Add some padding to the grade and range td's
-        const tds = $('td')
-        for (let i = 0; i < tds.length; i++) {
-          if (tds[i].headers.includes('grade') || tds[i].headers.includes('range')) {
-            tds[i].style.paddingLeft = '16px'
-            tds[i].style.paddingRight = '16px'
-          }
-        }
       }
     })
+  }).then(() => {
+        // Get all table data elements
+        const tds = $('td')
+
+        // Add some padding to the grade and range td's
+        // and hide unmarked rows if the hide unmarked checkbox is checked
+        for (let i = 0; i < tds.length; i++) {
+          if (tds[i].headers.includes('grade') || tds[i].headers.includes('range')) {
+            tds[i].style.padding = '0px 16px'
+          }
+
+          if ($('#hide_unmarked_checkbox').is(':checked') && tds[i].textContent === '-') {
+            tds[i].parentElement.style.visibility = 'hidden'
+            tds[i].parentElement.style.display = 'none'
+          }
+        }
   }).catch(e => e)
 }
 
@@ -103,13 +111,16 @@ function init () {
   const hide = document.createElement('span')
   hide.id = 'hide_unmarked'
 
-  const hideLabel = document.createElement('input')
+  const hideLabel = document.createElement('p')
   hideLabel.id = 'hide_unmarked_label'
-  hideLabel.textContent = 'Hide Unmarked: '
+  hideLabel.textContent = 'Hide Unmarked:'
+  hideLabel.style.display = 'inline-block'
+  hideLabel.style.margin = '8px 8px 8px 0px'
 
   const hideCheckbox = document.createElement('input')
   hideCheckbox.id = 'hide_unmarked_checkbox'
   hideCheckbox.type = 'checkbox'
+  hideCheckbox.checked = true
   hideCheckbox.addEventListener('change', refreshTable)
 
   hide.append(hideLabel, hideCheckbox)

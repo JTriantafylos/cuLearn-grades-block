@@ -100,10 +100,19 @@ function init () {
   select.id = 'semesters'
   select.addEventListener('change', refreshTable)
 
-  const hide = document.createElement('input')
+  const hide = document.createElement('span')
   hide.id = 'hide_unmarked'
-  hide.type = 'checkbox'
-  hide.addEventListener('change', refreshTable)
+
+  const hideLabel = document.createElement('input')
+  hideLabel.id = 'hide_unmarked_label'
+  hideLabel.textContent = 'Hide Unmarked: '
+
+  const hideCheckbox = document.createElement('input')
+  hideCheckbox.id = 'hide_unmarked_checkbox'
+  hideCheckbox.type = 'checkbox'
+  hideCheckbox.addEventListener('change', refreshTable)
+
+  hide.append(hideLabel, hideCheckbox)
 
   app.append(select, hide, table, loading)
 
